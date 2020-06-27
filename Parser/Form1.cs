@@ -15,10 +15,11 @@ namespace Parser
         {
             InitializeComponent();
             ReferenseCard();
-           // Parse_Card();
+            ShowData();
         }
 
         public string path_href = "Ссылки.txt";
+        public string path_data_card = "Данные.txt";
 
         private void ReferenseCard()
         {
@@ -38,7 +39,7 @@ namespace Parser
                 foreach (HtmlNode node in doc.DocumentNode.SelectNodes("//a[@class='table_action_btn icon-details']"))
                 {
                     WebClient cl = new WebClient();
-                    string path_data_card = "Данные.txt";
+                    //string path_data_card = "Данные.txt";
                     //считываем текстовик где записаны все ссылкиб и записываем в Htmldoc НАЧАЛО
                     string html = cl.DownloadString("https://inspections.gov.ua" + node.GetAttributeValue("href", null));
                     HtmlAgilityPack.HtmlDocument doc_card = new HtmlAgilityPack.HtmlDocument();
@@ -126,13 +127,21 @@ namespace Parser
                             sw.WriteLine(txt.Text); 
                         }
                     }
-                    using (StreamReader sr = new StreamReader(path_data_card))
-                    {
-                        txt.Text = (sr.ReadToEnd());
-                    }
+                    //using (StreamReader sr = new StreamReader(path_data_card))
+                    //{
+                    //    txt.Text = (sr.ReadToEnd());
+                    //}
                 }
             }
             //считываем каждую ссылку КОНЕЦ
+        }
+
+        private void ShowData()
+        {
+            using (StreamReader sr = new StreamReader(path_data_card))
+            {
+                txt.Text = (sr.ReadToEnd());
+            }
         }
     }
 }
